@@ -1,3 +1,5 @@
+package harjoitustehtava2;
+
 
 public class Kysymys {
     String kurssi;

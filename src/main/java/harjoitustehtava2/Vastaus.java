@@ -1,3 +1,5 @@
+package harjoitustehtava2;
+
 
 public class Vastaus {
     boolean oikein;
