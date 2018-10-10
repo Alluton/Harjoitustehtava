@@ -9,21 +9,26 @@
         <h1>Kysymykset</h1>
         
         <p>
-            Tässä lista kysymyksistä:.
+            Tässä lista kysymyksistä:
         </p>
-        
-        <p th:text="${lista}">
-            :D
-        </p>
+        <h1> Kysymykset</h1>
+     
         
         <ul>
             <li th:each="arvo : ${lista}">
                 <span th:text="${arvo}">
                     :DD
                 </span>
+                <form method="POST" action="/vastaus">
+                    Vastausteksti:<br/>
+                    <input type="text" name="vastausteksti"/><br/>
+                    oikein:<br/>
+                    <input type="text" name="oikein"/><br/>
+                    <button name="subject" type="submit" value="HTML">Lisää vastaus</button> 
+                    <a href="/vastaukset">Vastaukset</a>
+                </form>
             </li>
         </ul>
-        
         <form method="POST" action="/kysymys">
             Aihe:<br/>
             <input type="text" name="aihe"/><br/>
@@ -31,15 +36,7 @@
             <input type="text" name="kysymysteksti"/><br/>
             Kurssi:<br/>
             <input type="text" name="kurssi"/><br/>
-            <input type="submit"/>
+            <button name="subject" type="submit" value="HTML">Lisää kysymys</button>
         </form>
-
-        
-        <form action="/vastaus" method="POST">
-            <input type="text" name="Vastaus"/>
-            <input type="submit"/>
-        </form>
-        
     </body>
-    
 </html>

@@ -35,7 +35,7 @@ public class Main {
 
             // käsittele kyselyn tulokset
             while (tulos.next()) {
-                String teksti = tulos.getString("Aihe");
+                String teksti = "Aihe: " + tulos.getString("Aihe") + "\n" + "Kysymys: " + tulos.getString("Kysymysteksti") + "\n" + " Kurssi: " +  tulos.getString("kurssi");
                 kysymykset.add(teksti);
             }
             // sulje yhteys tietokantaan
@@ -46,6 +46,33 @@ public class Main {
             map.put("lista", kysymykset);
 
             return new ModelAndView(map, "index");
+        }, new ThymeleafTemplateEngine());
+        
+        Spark.get("/vastaukset", (req, res) -> {
+
+            List<String> vastaukset = new ArrayList<>();
+
+            // avaa yhteys tietokantaan
+            Connection conn = getConnection();
+            
+            // tee kysely
+            PreparedStatement stmt
+                    = conn.prepareStatement("SELECT * FROM Vastaus");
+            ResultSet tulos = stmt.executeQuery();
+
+            // käsittele kyselyn tulokset
+            while (tulos.next()) {
+                String teksti = tulos.getString("vastausteksti");
+                vastaukset.add(teksti);
+            }
+            // sulje yhteys tietokantaan
+            conn.close();
+
+            HashMap map = new HashMap<>();
+
+            map.put("lista", vastaukset);
+
+            return new ModelAndView(map, "index_1");
         }, new ThymeleafTemplateEngine());
 
         Spark.post("/kysymys", (req, res) -> {
@@ -69,7 +96,7 @@ public class Main {
             res.redirect("/");
             return "";
         });
-        Spark.post("/vastaus", (req, res) -> {
+        Spark.post("/vastaus/{", (req, res) -> {
             System.out.println("Hei maailma!");
 
 
@@ -98,7 +125,7 @@ public class Main {
             return DriverManager.getConnection(dbUrl);
         }
 
-        return DriverManager.getConnection("jdbc:sqlite:tietokanta.db");
+        return DriverManager.getConnection("jdbc:sqlite:db/tietokanta.db");
     }
 
 }

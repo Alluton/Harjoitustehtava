@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+    
+    <head>
+        <title>Vastaukset</title>
+    </head>
+    
+    <body>
+        <h1>Vastaukset</h1>
+        
+        <p>
+            Tässä lista vastauksista:
+        </p>
+        <h1> Kysymykset</h1>
+        <p th:text="${lista}">
+            :D
+        </p>
+        
+        <ul>
+            <li th:each="arvo : ${lista}">
+                <span th:text="${arvo}">
+                    :DD
+                </span>
+            </li>
+        </ul>      
+    </body>
+    
+</html>
