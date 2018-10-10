@@ -24,10 +24,17 @@
             </li>
         </ul>
         
-        <form action="/kysymys" method="POST">
-            <input type="text" name="Kysymys"/>
+        <form method="POST" action="/kysymys">
+            Aihe:<br/>
+            <input type="text" name="aihe"/><br/>
+            Kysymysteksti:<br/>
+            <input type="text" name="kysymysteksti"/><br/>
+            Kurssi:<br/>
+            <input type="text" name="kurssi"/><br/>
             <input type="submit"/>
         </form>
+
+        
         <form action="/vastaus" method="POST">
             <input type="text" name="Vastaus"/>
             <input type="submit"/>
