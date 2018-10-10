@@ -35,7 +35,7 @@ public class Main {
 
             // käsittele kyselyn tulokset
             while (tulos.next()) {
-                String teksti = tulos.getString("teksti");
+                String teksti = tulos.getString("Aihe");
                 kysymykset.add(teksti);
             }
             // sulje yhteys tietokantaan
