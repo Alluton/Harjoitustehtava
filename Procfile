@@ -1,1 +1,1 @@
-web: java -cp target/classes:target/dependency/* Harjoitustehtava2.Main
+web: java -cp target/classes:target/dependency/* harjoitustehtava2.Main
