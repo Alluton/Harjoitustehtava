@@ -56,8 +56,10 @@ public class Main {
             
             // tee kysely
             PreparedStatement stmt
-                    = conn.prepareStatement("INSERT INTO Kysymys (kysymysteksti,kurssi,aihe) VALUES (?)");
-            stmt.setString(1, req.queryParams("kysymysteksti,kurssi,aihe"));
+                    = conn.prepareStatement("INSERT INTO Kysymys (kysymysteksti,kurssi,aihe) VALUES (?,?,?)");
+            stmt.setString(1, req.queryParams("kysymysteksti"));
+            stmt.setString(2, req.queryParams("kurssi"));
+            stmt.setString(3, req.queryParams("aihe"));
 
             stmt.executeUpdate();
 
@@ -76,8 +78,9 @@ public class Main {
             
             // tee kysely
             PreparedStatement stmt
-                    = conn.prepareStatement("INSERT INTO Vastaus (vastausteksti,oikein) VALUES (?)");
-            stmt.setString(1, req.queryParams("vastausteksti,oikein"));
+                    = conn.prepareStatement("INSERT INTO Vastaus (vastausteksti,oikein) VALUES (?,?)");
+            stmt.setString(1, req.queryParams("vastausteksti"));
+            stmt.setString(2, req.queryParams("oikein"));
 
             stmt.executeUpdate();
 
