@@ -1,16 +1,38 @@
 <!DOCTYPE html>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
 <html>
+    
     <head>
-        <title>TODO supply a title</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Huonekalut</title>
     </head>
+    
     <body>
-        <div>TODO write content</div>
+        <h1>Huonekalut</h1>
+        
+        <p>
+            Huonekalut nuo hienoja ovat, voi veljet, onpa ne somat.
+        </p>
+        
+        <p th:text="${lista}">
+            :D
+        </p>
+        
+        <ul>
+            <li th:each="arvo : ${lista}">
+                <span th:text="${arvo}">
+                    :DD
+                </span>
+            </li>
+        </ul>
+        
+        <form action="/kysymys" method="POST">
+            <input type="text" name="Kysymys"/>
+            <input type="submit"/>
+        </form>
+        <form action="/vastaus" method="POST">
+            <input type="text" name="Vastaus"/>
+            <input type="submit"/>
+        </form>
+        
     </body>
+    
 </html>
