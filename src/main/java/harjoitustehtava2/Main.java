@@ -35,7 +35,7 @@ public class Main {
 
             // käsittele kyselyn tulokset
             while (tulos.next()) {
-                Kysymys kysymys = new Kysymys(tulos.getInt("id"),tulos.getString("Aihe"),tulos.getString("Kysymysteksti"),tulos.getString("kurssi"));
+                Kysymys kysymys = new Kysymys(tulos.getInt("id"),tulos.getString("aihe"),tulos.getString("kysymysteksti"),tulos.getString("kurssi"));
                 kysymykset.add(kysymys);
             }
             // sulje yhteys tietokantaan
@@ -48,7 +48,7 @@ public class Main {
             return new ModelAndView(map, "index");
         }, new ThymeleafTemplateEngine());
         
-        Spark.get("/vastaukset", (req, res) -> {
+        Spark.post("/vastaukset", (req, res) -> {
 
             List<Vastaus> vastaukset = new ArrayList<>();
 
@@ -57,12 +57,13 @@ public class Main {
             
             // tee kysely
             PreparedStatement stmt
-                    = conn.prepareStatement("SELECT * FROM Vastaus");
+                    = conn.prepareStatement("SELECT * FROM Vastaus WHERE kysymysId = 1");
+            //stmt.setInt(1, Integer.parseInt(req.queryParams(":id")));
             ResultSet tulos = stmt.executeQuery();
 
             // käsittele kyselyn tulokset
             while (tulos.next()) {
-                Vastaus vastaus = new Vastaus(tulos.getInt("id"),true,tulos.getString("vastausteksti"));
+                Vastaus vastaus = new Vastaus(tulos.getInt("id"),true,tulos.getString("vastausteksti"),tulos.getInt("kysymysId"));
                 vastaukset.add(vastaus);
             }
             // sulje yhteys tietokantaan
@@ -70,7 +71,7 @@ public class Main {
 
             HashMap map = new HashMap<>();
 
-            map.put("lista", vastaukset);
+            map.put("lista2", vastaukset);
 
             return new ModelAndView(map, "index1");
         }, new ThymeleafTemplateEngine());
@@ -96,7 +97,7 @@ public class Main {
             res.redirect("/");
             return "";
         });
-        Spark.post("/vastaus", (req, res) -> {
+        Spark.post("/vastaus/:id", (req, res) -> {
             System.out.println("Hei maailma!");
 
             // avaa yhteys tietokantaan
@@ -104,9 +105,10 @@ public class Main {
             
             // tee kysely
             PreparedStatement stmt
-                    = conn.prepareStatement("INSERT INTO Vastaus (vastausteksti,oikein) VALUES (?,?)");
+                    = conn.prepareStatement("INSERT INTO Vastaus (vastausteksti,oikein,kysymysId) VALUES (?,?,?)");
             stmt.setString(1, req.queryParams("vastausteksti"));
             stmt.setString(2, req.queryParams("oikein"));
+            stmt.setInt(3, Integer.parseInt(req.queryParams(":id")));
 
             stmt.executeUpdate();
 
@@ -116,26 +118,17 @@ public class Main {
             res.redirect("/");
             return "";
         });
-        Spark.post("/delete/:id", (req, res) -> {
-            System.out.println("Hei maailma!");
-
-            // avaa yhteys tietokantaan
+        Spark.post("/poista/:id", (req, res) -> {
             Connection conn = getConnection();
-            System.out.println("Tähän asti päästy");
-            // tee kysely
+ 
             System.out.println("ID: " +req.queryParams(":id"));
             Integer id = Integer.parseInt(req.queryParams(":id"));
-            System.out.println("Tähän asti päästy 1a");
             PreparedStatement stmt
                     = conn.prepareStatement("DELETE FROM Kysymys WHERE id = ?");
-            System.out.println("Tähän asti päästy1b");
             stmt.setInt(1, id);
-            System.out.println("Tähän asti pästy2");
             stmt.executeUpdate();
 
-            // sulje yhteys tietokantaan
             conn.close();
-            System.out.println("Tähän asti päästy3");
             res.redirect("/");
             return "";
         });

@@ -12,19 +12,22 @@
         </p>
         <h1> Kysymykset</h1>
         <ul>
-            <li th:each="arvo : ${lista}">
+            <li th:each="arvo:${lista}">
+                <form th:action="@{~/poista/{id}(id=${arvo.id})}" method="POST">
+                    <input type="submit" value="Poista"/>
+                </form>
                 <span th:text="${arvo}">
                     :DD
                 </span>
-                <form method="POST" action="/vastaus">
+                <form method="POST" action="@{~/vastaus/{id}(id=${arvo.id})}">
                     Vastausteksti:<br/>
                     <input type="text" name="vastausteksti"/><br/>
                     oikein:<br/>
                     <input name="totta" type="checkbox">
                     <button name="subject" type="submit" value="HTML">Lisää vastaus</button>                   
                 </form>
-                <form th:action="@{~/delete/{id}(id=${arvo.id})}" method="POST">
-                    <input type="submit" value="Poista"/>
+                <form th:action="@{~/vastaukset}" method="POST">
+                    <input type="submit" value="Vastaukset"/>
                 </form>
             </li>
         </ul>

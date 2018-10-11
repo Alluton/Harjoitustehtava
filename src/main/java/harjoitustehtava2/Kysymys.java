@@ -2,17 +2,17 @@ package harjoitustehtava2;
 
 
 public class Kysymys {
-    String kurssi;
-    String aihe;
-    String teksti;
-    int id;
+    private String kurssi;
+    private String aihe;
+    private String teksti;
+    private Integer id;
     public Kysymys(int id,String aihe,String kurssi,String teksti){
         this.id = id;
         this.kurssi = kurssi;
         this.aihe = aihe;
         this.teksti = teksti;
     }
-    public int getId(){
+    public Integer getId(){
         return id;
     }
     public String getKurssi(){
