@@ -21,8 +21,10 @@
                     <input type="text" name="vastausteksti"/><br/>
                     oikein:<br/>
                     <input type="text" name="oikein"/><br/>
-                    <button name="subject" type="submit" value="HTML">Lisää vastaus</button> 
-                    <a href="/vastaukset">Vastaukset</a>
+                    <button name="subject" type="submit" value="HTML">Lisää vastaus</button>                   
+                </form>
+                <form method="POST" th:action="@{~/delete/{id}(id=${arvo.id})}">
+                    <input type="submit" value="Poista"/>
                 </form>
             </li>
         </ul>

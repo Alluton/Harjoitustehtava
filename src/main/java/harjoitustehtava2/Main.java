@@ -23,7 +23,7 @@ public class Main {
 
         Spark.get("*", (req, res) -> {
 
-            List<String> kysymykset = new ArrayList<>();
+            List<Kysymys> kysymykset = new ArrayList<>();
 
             // avaa yhteys tietokantaan
             Connection conn = getConnection();
@@ -35,8 +35,8 @@ public class Main {
 
             // käsittele kyselyn tulokset
             while (tulos.next()) {
-                String teksti = "Aihe: " + tulos.getString("Aihe") + "Kysymys: " + tulos.getString("Kysymysteksti") + " Kurssi: " +  tulos.getString("kurssi");
-                kysymykset.add(teksti);
+                Kysymys kysymys = new Kysymys(tulos.getInt("id"),tulos.getString("Aihe"),tulos.getString("Kysymysteksti"),tulos.getString("kurssi"));
+                kysymykset.add(kysymys);
             }
             // sulje yhteys tietokantaan
             conn.close();
@@ -50,7 +50,7 @@ public class Main {
         
         Spark.get("/vastaukset", (req, res) -> {
 
-            List<String> vastaukset = new ArrayList<>();
+            List<Vastaus> vastaukset = new ArrayList<>();
 
             // avaa yhteys tietokantaan
             Connection conn = getConnection();
@@ -62,8 +62,8 @@ public class Main {
 
             // käsittele kyselyn tulokset
             while (tulos.next()) {
-                String teksti = tulos.getString("vastausteksti");
-                vastaukset.add(teksti);
+                Vastaus vastaus = new Vastaus(tulos.getInt("id"),true,tulos.getString("vastausteksti"));
+                vastaukset.add(vastaus);
             }
             // sulje yhteys tietokantaan
             conn.close();
@@ -72,7 +72,7 @@ public class Main {
 
             map.put("lista", vastaukset);
 
-            return new ModelAndView(map, "index_1");
+            return new ModelAndView(map, "index1");
         }, new ThymeleafTemplateEngine());
 
         Spark.post("/kysymys", (req, res) -> {
@@ -96,7 +96,7 @@ public class Main {
             res.redirect("/");
             return "";
         });
-        Spark.post("/vastaus/{", (req, res) -> {
+        Spark.post("/vastaus/", (req, res) -> {
             System.out.println("Hei maailma!");
 
 
@@ -108,6 +108,25 @@ public class Main {
                     = conn.prepareStatement("INSERT INTO Vastaus (vastausteksti,oikein) VALUES (?,?)");
             stmt.setString(1, req.queryParams("vastausteksti"));
             stmt.setString(2, req.queryParams("oikein"));
+
+            stmt.executeUpdate();
+
+            // sulje yhteys tietokantaan
+            conn.close();
+
+            res.redirect("/");
+            return "";
+        });
+        Spark.post("/delete/:id", (req, res) -> {
+            System.out.println("Hei maailma!");
+
+            // avaa yhteys tietokantaan
+            Connection conn = getConnection();
+            
+            // tee kysely
+            PreparedStatement stmt
+                    = conn.prepareStatement("DELETE FROM Kysymys WHERE id = ?");
+            stmt.setInt(1, Integer.parseInt(req.queryParams(":id")));
 
             stmt.executeUpdate();
 
