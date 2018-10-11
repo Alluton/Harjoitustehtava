@@ -96,9 +96,8 @@ public class Main {
             res.redirect("/");
             return "";
         });
-        Spark.post("/vastaus/", (req, res) -> {
+        Spark.post("/vastaus", (req, res) -> {
             System.out.println("Hei maailma!");
-
 
             // avaa yhteys tietokantaan
             Connection conn = getConnection();
@@ -122,17 +121,21 @@ public class Main {
 
             // avaa yhteys tietokantaan
             Connection conn = getConnection();
-            
+            System.out.println("Tähän asti päästy");
             // tee kysely
+            System.out.println("ID: " +req.queryParams(":id"));
+            Integer id = Integer.parseInt(req.queryParams(":id"));
+            System.out.println("Tähän asti päästy 1a");
             PreparedStatement stmt
                     = conn.prepareStatement("DELETE FROM Kysymys WHERE id = ?");
-            stmt.setInt(1, Integer.parseInt(req.queryParams(":id")));
-
+            System.out.println("Tähän asti päästy1b");
+            stmt.setInt(1, id);
+            System.out.println("Tähän asti pästy2");
             stmt.executeUpdate();
 
             // sulje yhteys tietokantaan
             conn.close();
-
+            System.out.println("Tähän asti päästy3");
             res.redirect("/");
             return "";
         });

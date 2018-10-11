@@ -20,10 +20,10 @@
                     Vastausteksti:<br/>
                     <input type="text" name="vastausteksti"/><br/>
                     oikein:<br/>
-                    <input type="text" name="oikein"/><br/>
+                    <input name="totta" type="checkbox">
                     <button name="subject" type="submit" value="HTML">Lisää vastaus</button>                   
                 </form>
-                <form method="POST" th:action="@{~/delete/{id}(id=${arvo.id})}">
+                <form th:action="@{~/delete/{id}(id=${arvo.id})}" method="POST">
                     <input type="submit" value="Poista"/>
                 </form>
             </li>

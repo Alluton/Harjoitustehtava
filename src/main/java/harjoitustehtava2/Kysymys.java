@@ -5,14 +5,14 @@ public class Kysymys {
     String kurssi;
     String aihe;
     String teksti;
-    Integer id;
-    public Kysymys(Integer id,String aihe,String kurssi,String teksti){
+    int id;
+    public Kysymys(int id,String aihe,String kurssi,String teksti){
         this.id = id;
         this.kurssi = kurssi;
         this.aihe = aihe;
         this.teksti = teksti;
     }
-    public Integer getId(){
+    public int getId(){
         return id;
     }
     public String getKurssi(){
