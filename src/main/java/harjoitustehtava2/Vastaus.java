@@ -2,10 +2,10 @@ package harjoitustehtava2;
 
 
 public class Vastaus {
-    boolean oikein;
-    String teksti;
-    Integer id;
-    Integer kysymysId;
+    private boolean oikein;
+    private String teksti;
+    private Integer id;
+    private Integer kysymysId;
     public Vastaus(Integer id,boolean oikein, String teksti,Integer kysymysId){
         this.id = id;
         this.oikein = oikein;
@@ -20,6 +20,9 @@ public class Vastaus {
     }
     public String getTeksti(){
         return teksti;
+    }
+    public int getKysymysId(){
+        return kysymysId;
     }
     public String toString(){
         return "Teksti: " + teksti + " Oikein: " + oikein;

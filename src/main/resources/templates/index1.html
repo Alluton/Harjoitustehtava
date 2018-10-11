@@ -2,34 +2,30 @@
 <html>
     
     <head>
-        <title>Vastaukset</title>
+        <title>Kysymys</title>
     </head>
     
     <body>
-        <h1>Vastaukset</h1>
-        
+        <h1>Kysymys</h1>  
         <p>
             Tässä lista vastauksista:
         </p>
-        <h1> Kysymykset</h1>
-        <p th:text="${lista2}">
-            :D
-        </p>
-        
+        <h1>Vastaukset</h1>
         <ul>
             <li th:each="arvo : ${lista2}">
                 <span th:text="${arvo}">
                     :DD
                 </span>
-                <form method="POST" action="@{~/vastaus/{id}(id=${arvo.id})}">
+                <form method="POST" th:action="@{~/vastaus/{id}(id=${arvo.kysymysId})}">
                     <br>Vastausteksti:<br/>
                     <input type="text" name="vastausteksti"/>
                     <br>oikein:<br/>
-                    <input name="totta" type="checkbox">
-                    <button name="subject" type="submit" value="HTML">Lisää vastaus</button>                   
+                    <input name="oikein" type="checkbox">
+                    <button type="submit" value="HTML">Lisää vastaus</button>                   
                 </form>
             </li>
-        </ul>      
+        </ul>
+        <h2>Lisää vastaus</h2>
     </body>
     
 </html>

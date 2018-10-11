@@ -73,6 +73,7 @@ public class Main {
             HashMap map = new HashMap<>();
 
             map.put("lista2", vastaukset);
+            
 
             return new ModelAndView(map, "index1");
         }, new ThymeleafTemplateEngine());
@@ -105,16 +106,16 @@ public class Main {
             // tee kysely
             PreparedStatement stmt
                     = conn.prepareStatement("INSERT INTO Vastaus (vastausteksti,oikein,kysymysId) VALUES (?,?,?)");
-            stmt.setString(1, req.params("vastausteksti"));
-            stmt.setString(2, req.params("oikein"));
+            stmt.setString(1, req.queryParams("vastausteksti"));
+            stmt.setString(2, req.queryParams("oikein"));
             stmt.setInt(3, Integer.parseInt(req.params(":id")));
 
             stmt.executeUpdate();
 
             // sulje yhteys tietokantaan
             conn.close();
-
-            res.redirect("/");
+            int id = Integer.parseInt(req.params(":id"));
+            res.redirect("/vastaukset/" + id);
             return "";
         });
         Spark.post("/poista/:id", (req, res) -> {
