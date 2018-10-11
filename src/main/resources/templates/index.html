@@ -23,7 +23,9 @@
                     <input name="totta" type="checkbox">
                     <button name="subject" type="submit" value="HTML">Lisää vastaus</button>                   
                 </form>
-                
+                <form th:action="@{~/poista/{id}(id=${arvo.id})}" method="POST">
+                    <input type="submit" value="Poista"/>
+                </form>
                 <form th:action="@{~/vastaukset}" method="POST">
                     <input type="submit" value="Vastaukset"/>
                 </form>
