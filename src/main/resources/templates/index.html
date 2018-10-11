@@ -6,7 +6,6 @@
     
     <body>
         <h1>Kysymykset</h1>
-        <a th:href="@{__${#httpServletRequest.requestURI}__/store/__${store.name}__}">
         <ul>
             <li th:each="arvo : ${lista}">
                 <span th:text="${arvo}">
