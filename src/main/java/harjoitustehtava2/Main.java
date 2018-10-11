@@ -107,7 +107,7 @@ public class Main {
             PreparedStatement stmt
                     = conn.prepareStatement("INSERT INTO Vastaus (vastausteksti,oikein,kysymysId) VALUES (?,?,?)");
             stmt.setString(1, req.queryParams("vastausteksti"));
-            stmt.setString(2, req.queryParams("oikein"));
+            stmt.setInt(2,Integer.parseInt(req.queryParams("oikein")));
             stmt.setInt(3, Integer.parseInt(req.params(":id")));
 
             stmt.executeUpdate();
