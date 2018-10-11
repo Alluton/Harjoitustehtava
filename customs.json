@@ -9,6 +9,9 @@
         },
         "th:each": {
             "context": "li"
+        },
+        "th:href": {
+            "context": "a"
         }
     }
 }

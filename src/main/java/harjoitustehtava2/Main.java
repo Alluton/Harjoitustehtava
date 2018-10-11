@@ -64,7 +64,7 @@ public class Main {
 
             // käsittele kyselyn tulokset
             while (tulos.next()) {
-                Vastaus vastaus = new Vastaus(tulos.getInt("id"),true,tulos.getString("vastausteksti"),tulos.getInt("kysymysId"));
+                Vastaus vastaus = new Vastaus(tulos.getInt("id"),tulos.getBoolean("oikein"),tulos.getString("vastausteksti"),tulos.getInt("kysymysId"));
                 vastaukset.add(vastaus);
             }
             // sulje yhteys tietokantaan
@@ -123,7 +123,6 @@ public class Main {
             PreparedStatement stmt
                     = conn.prepareStatement("DELETE FROM Kysymys WHERE id = ?");
             stmt.setInt(1, Integer.parseInt(req.params(":id")));
-            System.out.println(Integer.parseInt(req.params(":id")));
 
             stmt.executeUpdate();
 
@@ -137,7 +136,6 @@ public class Main {
             PreparedStatement stmt
                     = conn.prepareStatement("DELETE FROM Vastaus WHERE id = ?");
             stmt.setInt(1, Integer.parseInt(req.params(":id")));
-            System.out.println(Integer.parseInt(req.params(":id")));
 
             stmt.executeUpdate();
 
