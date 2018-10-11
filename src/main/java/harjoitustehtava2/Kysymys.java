@@ -26,7 +26,7 @@ public class Kysymys {
     }
     @Override
     public String toString(){
-        return "Aihe: " + aihe;
+        return "Aihe: " + aihe + " Kysymys: " + teksti + " Kurssi: " + kurssi;
     }
     
     

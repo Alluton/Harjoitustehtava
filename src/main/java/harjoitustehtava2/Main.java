@@ -35,7 +35,7 @@ public class Main {
 
             // käsittele kyselyn tulokset
             while (tulos.next()) {
-                Kysymys kysymys = new Kysymys(tulos.getInt("id"),tulos.getString("aihe"),tulos.getString("kysymysteksti"),tulos.getString("kurssi"));
+                Kysymys kysymys = new Kysymys(tulos.getInt("id"),tulos.getString("aihe"),tulos.getString("kurssi"),tulos.getString("kysymysteksti"));
                 kysymykset.add(kysymys);
             }
             // sulje yhteys tietokantaan
@@ -122,6 +122,20 @@ public class Main {
             Connection conn = getConnection();
             PreparedStatement stmt
                     = conn.prepareStatement("DELETE FROM Kysymys WHERE id = ?");
+            stmt.setInt(1, Integer.parseInt(req.params(":id")));
+            System.out.println(Integer.parseInt(req.params(":id")));
+
+            stmt.executeUpdate();
+
+            conn.close();
+
+            res.redirect("/");
+            return "";
+        });
+        Spark.post("/poista/vastaus/:id", (req, res) -> {
+            Connection conn = getConnection();
+            PreparedStatement stmt
+                    = conn.prepareStatement("DELETE FROM Vastaus WHERE id = ?");
             stmt.setInt(1, Integer.parseInt(req.params(":id")));
             System.out.println(Integer.parseInt(req.params(":id")));
 

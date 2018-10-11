@@ -7,10 +7,6 @@
     
     <body>
         <h1>Kysymykset</h1>
-        <p>
-            Tässä lista kysymyksistä:
-        </p>
-        <h1> Kysymykset</h1>
         <ul>
             <li th:each="arvo : ${lista}">
                 <span th:text="${arvo}">
@@ -24,6 +20,7 @@
                 </form>  
             </li>
         </ul>
+        <h3>Lisää kysymys</h3>
         <form method="POST" action="/kysymys">
             Aihe:<br/>
             <input type="text" name="aihe"/><br/>
