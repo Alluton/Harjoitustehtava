@@ -48,7 +48,7 @@ public class Main {
             return new ModelAndView(map, "index");
         }, new ThymeleafTemplateEngine());
         
-        Spark.post("/vastaukset", (req, res) -> {
+        Spark.post("/vastaukset/:id", (req, res) -> {
 
             List<Vastaus> vastaukset = new ArrayList<>();
 
@@ -57,9 +57,10 @@ public class Main {
             
             // tee kysely
             PreparedStatement stmt
-                    = conn.prepareStatement("SELECT * FROM Vastaus WHERE kysymysId = 1");
-            //stmt.setInt(1, Integer.parseInt(req.queryParams(":id")));
+                    = conn.prepareStatement("SELECT * FROM Vastaus WHERE kysymysId = ?");
+            stmt.setInt(1, Integer.parseInt(req.params(":id")));
             ResultSet tulos = stmt.executeQuery();
+            
 
             // käsittele kyselyn tulokset
             while (tulos.next()) {
@@ -98,17 +99,15 @@ public class Main {
             return "";
         });
         Spark.post("/vastaus/:id", (req, res) -> {
-            System.out.println("Hei maailma!");
-
             // avaa yhteys tietokantaan
             Connection conn = getConnection();
             
             // tee kysely
             PreparedStatement stmt
                     = conn.prepareStatement("INSERT INTO Vastaus (vastausteksti,oikein,kysymysId) VALUES (?,?,?)");
-            stmt.setString(1, req.queryParams("vastausteksti"));
-            stmt.setString(2, req.queryParams("oikein"));
-            stmt.setInt(3, Integer.parseInt(req.queryParams(":id")));
+            stmt.setString(1, req.params("vastausteksti"));
+            stmt.setString(2, req.params("oikein"));
+            stmt.setInt(3, Integer.parseInt(req.params(":id")));
 
             stmt.executeUpdate();
 
@@ -120,15 +119,15 @@ public class Main {
         });
         Spark.post("/poista/:id", (req, res) -> {
             Connection conn = getConnection();
- 
-            System.out.println("ID: " +req.queryParams(":id"));
-            Integer id = Integer.parseInt(req.queryParams(":id"));
             PreparedStatement stmt
                     = conn.prepareStatement("DELETE FROM Kysymys WHERE id = ?");
-            stmt.setInt(1, id);
+            stmt.setInt(1, Integer.parseInt(req.params(":id")));
+            System.out.println(Integer.parseInt(req.params(":id")));
+
             stmt.executeUpdate();
 
             conn.close();
+
             res.redirect("/");
             return "";
         });

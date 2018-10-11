@@ -22,7 +22,7 @@ public class Vastaus {
         return teksti;
     }
     public String toString(){
-        return "Id: " + id + " " + "Teksti: " + teksti;
+        return "Teksti: " + teksti + " Oikein: " + oikein;
     }
     
     
