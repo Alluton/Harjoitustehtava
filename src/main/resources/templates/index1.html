@@ -6,10 +6,14 @@
     </head>
     
     <body>
-        <h1>Kysymys</h1>   
-        <p>
-            Tässä lista vastauksista:
-        </p>
+        <h1>Kysymys</h1>
+        <ul>
+            <li th:each="arvo2 : ${lista}">
+                <span th:text="${arvo2}">
+                    :D
+                </span> 
+            </li>
+        </ul>
         <h1>Vastaukset</h1>
         <ul>
             <li th:each="arvo : ${lista2}">
@@ -19,18 +23,22 @@
                 <form method="POST" th:action="@{~/poista/vastaus/{id}(id=${arvo.id})}">
                     <input type="submit" value="Poista"/>
                 </form>
-                <form method="POST" th:action="@{~/vastaus/{id}(id=${arvo.kysymysId})}">
+            </li>
+        </ul>
+        <h2>Lisää vastaus</h2>
+        
+        <ul>
+            <li th:each="arvo2 : ${lista}">
+                <form method="POST" th:action="@{~/vastaus/{id}(id=${arvo2.id})}">
                     <br>Vastausteksti:<br/>
                     <input type="text" name="vastausteksti"/><br/>
                     <br>oikein:<br/>
                     <input name="oikein" type="checkbox" value = '1'><br/>
-                    <br>väärin:<br/>
-                    <input name="oikein" type="checkbox" value = '0'><br/>
                     <button type="submit" value="HTML">Lisää vastaus</button>                   
                 </form>
             </li>
         </ul>
-        <h2>Lisää vastaus</h2>
+
     </body>
     
 </html>

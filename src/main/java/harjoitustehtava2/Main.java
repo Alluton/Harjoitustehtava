@@ -69,11 +69,28 @@ public class Main {
             }
             // sulje yhteys tietokantaan
             conn.close();
+            
+            Connection conn2 = getConnection();
+            List<Kysymys> kysymykset = new ArrayList<>();
+
+            // tee kysely
+            PreparedStatement stmt2
+                    = conn2.prepareStatement("SELECT * FROM Kysymys WHERE id = ?");
+            stmt2.setInt(1, Integer.parseInt(req.params(":id")));
+            ResultSet tulos2 = stmt2.executeQuery();
+            // käsittele kyselyn tulokset
+            while (tulos2.next()) {
+                Kysymys kysymys = new Kysymys(tulos2.getInt("id"),tulos2.getString("aihe"),tulos2.getString("kurssi"),tulos2.getString("kysymysteksti"));
+                kysymykset.add(kysymys);
+            }
+            // sulje yhteys tietokantaan
+            conn2.close();
 
             HashMap map = new HashMap<>();
 
+            map.put("lista", kysymykset);
+
             map.put("lista2", vastaukset);
-            
 
             return new ModelAndView(map, "index1");
         }, new ThymeleafTemplateEngine());
@@ -107,7 +124,7 @@ public class Main {
             PreparedStatement stmt
                     = conn.prepareStatement("INSERT INTO Vastaus (vastausteksti,oikein,kysymysId) VALUES (?,?,?)");
             stmt.setString(1, req.queryParams("vastausteksti"));
-            if(Integer.parseInt(req.queryParams("oikein")) == 1 ){
+            if(req.queryParams("oikein") !=null ){
                 stmt.setBoolean(2,true);
             } else{
                 stmt.setBoolean(2,false);
@@ -118,8 +135,56 @@ public class Main {
 
             // sulje yhteys tietokantaan
             conn.close();
-            int id = Integer.parseInt(req.params(":id"));
-            res.redirect("/vastaukset/" + id);
+            //tähän lisää
+            Spark.post("/vastaukset/:id", (req2, res2) -> {
+                System.out.println("Tähän asti päästy");
+                List<Vastaus> vastaukset = new ArrayList<>();
+
+                // avaa yhteys tietokantaan
+                Connection conn3 = getConnection();
+
+                // tee kysely
+                PreparedStatement stmt3
+                        = conn3.prepareStatement("SELECT * FROM Vastaus WHERE kysymysId = ?");
+                System.out.println("Tähänkö päästy?");
+                stmt3.setInt(1, Integer.parseInt(req.params(":id")));
+                System.out.println("Entä tänne?");
+                ResultSet tulos3 = stmt.executeQuery();
+
+                System.out.println("Tänne päästy?");
+                // käsittele kyselyn tulokset
+                while (tulos3.next()) {
+                    Vastaus vastaus = new Vastaus(tulos3.getInt("id"),tulos3.getBoolean("oikein"),tulos3.getString("vastausteksti"),tulos3.getInt("kysymysId"));
+                    vastaukset.add(vastaus);
+                }
+                // sulje yhteys tietokantaan
+                conn3.close();
+                System.out.println("Tähän asti päästy kanssa");
+                Connection conn2 = getConnection();
+                List<Kysymys> kysymykset = new ArrayList<>();
+
+                // tee kysely
+                PreparedStatement stmt2
+                        = conn2.prepareStatement("SELECT * FROM Kysymys WHERE id = ?");
+                stmt2.setInt(1, Integer.parseInt(req.params(":id")));
+                ResultSet tulos2 = stmt2.executeQuery();
+                // käsittele kyselyn tulokset
+                while (tulos2.next()) {
+                    Kysymys kysymys = new Kysymys(tulos2.getInt("id"),tulos2.getString("aihe"),tulos2.getString("kurssi"),tulos2.getString("kysymysteksti"));
+                    kysymykset.add(kysymys);
+                }
+                // sulje yhteys tietokantaan
+                conn2.close();
+
+                HashMap map = new HashMap<>();
+
+                map.put("lista", kysymykset);
+
+                map.put("lista2", vastaukset);
+
+                return new ModelAndView(map, "index1");
+            }, new ThymeleafTemplateEngine());
+            res.redirect("/vastaukset/" + Integer.parseInt(req.params("id")));
             return "";
         });
         Spark.post("/poista/:id", (req, res) -> {
@@ -144,8 +209,8 @@ public class Main {
             stmt.executeUpdate();
 
             conn.close();
-
-            res.redirect("/");
+            int id = Integer.parseInt(req.params(":id"));
+            res.redirect("/vastaukset/" +id);
             return "";
         });
     }
