@@ -7,6 +7,9 @@
         "th:action": {
             "context": "form"
         },
+        "http-equiv": {
+            "context": "meta"
+        },
         "th:each": {
             "context": "li"
         },

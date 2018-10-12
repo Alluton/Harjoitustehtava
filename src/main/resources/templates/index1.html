@@ -2,6 +2,8 @@
 <html>
     
     <head>
+        <link rel="stylesheet" href="style.css" type="text/css"/>
+
         <title>Kysymys</title>
     </head>
     
@@ -25,20 +27,18 @@
                 </form>
             </li>
         </ul>
-        <h2>Lisää vastaus</h2>
-        
-        <ul>
+        <h1>Lisää vastaus</h1>
+        <ul style="list-style: none;">
             <li th:each="arvo2 : ${lista}">
                 <form method="POST" th:action="@{~/vastaus/{id}(id=${arvo2.id})}">
                     <br>Vastausteksti:<br/>
-                    <input type="text" name="vastausteksti"/><br/>
-                    <br>oikein:<br/>
-                    <input name="oikein" type="checkbox" value = '1'><br/>
-                    <button type="submit" value="HTML">Lisää vastaus</button>                   
+                    <input type="text" name="vastausteksti"/><br></br>
+                    oikein:
+                    <input name="oikein" type="checkbox" value = '1'>
+                    <button type="submit" value="Lisää vastaus">Lisää vastaus</button>
                 </form>
             </li>
         </ul>
-
     </body>
     
 </html>
