@@ -135,6 +135,7 @@ public class Main {
 
             // sulje yhteys tietokantaan
             conn.close();
+            res.redirect("/");
             //tähän lisää
             return "";
         });
