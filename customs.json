@@ -4,6 +4,9 @@
         "th:text": {
             "context": "span"
         },
+        "th:inlinetext": {
+            "context": "p"
+        },
         "th:action": {
             "context": "form"
         },
@@ -15,6 +18,9 @@
         },
         "th:href": {
             "context": "a"
+        },
+        "th:inline": {
+            "context": "p"
         }
     }
 }

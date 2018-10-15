@@ -1,45 +1,41 @@
 <!DOCTYPE html>
 <html>
-    
     <head>
         <link rel="stylesheet" href="style.css" type="text/css"/>
 
         <title>Kysymys</title>
     </head>
-    
     <body>
         <h1>Kysymys</h1>
         <ul>
             <li th:each="arvo2 : ${lista}">
-                <span th:text="${arvo2}">
-                    :D
-                </span> 
+                <b style="display:inline">Aihe:</b><p style="display:inline" th:inline="text"th:text="${arvo2.aihe}"></p> 
+                <b style="display:inline">Kurssi:</b> <p style="display:inline" th:inline="text"th:text="${arvo2.kurssi}"></p> 
+                <b style="display:inline">Kysymys:</b><p style="display:inline" th:inline="text"th:text="${arvo2.kysymysteksti}"></p>
             </li>
         </ul>
         <h1>Vastaukset</h1>
         <ul>
             <li th:each="arvo : ${lista2}">
-                <span th:text="${arvo}">
-                    :DD
-                </span>
+                <b style="display:inline">Vastaus:</b><p style="display:inline" th:inline="text"th:text="${arvo.vastausteksti}"></p> 
+                <b style="display:inline">Oikein:</b> <p style="display:inline" th:inline="text"th:text="${arvo.oikein}"></p> 
                 <form method="POST" th:action="@{~/poista/vastaus/{id}(id=${arvo.id})}">
                     <input type="submit" value="Poista"/>
                 </form>
             </li>
         </ul>
         <h1>Lisää vastaus</h1>
-        <ul style="list-style: none;">
-            <li th:each="arvo2 : ${lista}">
-                <form method="POST" th:action="@{~/vastaus/{id}(id=${arvo2.id})}">
+        <ul style="margin-left:0px;list-style: none;">
+            <li style="margin-left:0px;" th:each="arvo2 : ${lista}">
+                <form style="margin-left:-35px;" method="POST" th:action="@{~/vastaus/{id}(id=${arvo2.id})}">
                     <br>Vastausteksti:<br/>
                     <input type="text" name="vastausteksti" required/><br/>
                     oikein:
                     <input name="oikein" type="checkbox" value = '1'>
                     <button type="submit" value="Lisää vastaus">Lisää vastaus</button>
                 </form>
-                <a href="/">Palaa etusivulle</a> 
+                <a style="margin-left:-35px;" href="/">Palaa etusivulle</a> 
             </li>
         </ul>
     </body>
-    
 </html>

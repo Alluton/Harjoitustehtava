@@ -3,18 +3,18 @@
     <head>
         <title>Kysymykset</title>
     </head>
-    
     <body>
         <h1>Kysymykset</h1>
         <ul>
             <li th:each="arvo : ${lista}">
-                <span th:text="${arvo}">
-                    :D
-                </span>
+                <b style="display:inline">Aihe:</b><p style="display:inline" th:inline="text"th:text="${arvo.aihe}"></p> 
+                <b style="display:inline">Kurssi:</b> <p style="display:inline" th:inline="text"th:text="${arvo.kurssi}"></p> 
+                <b style="display:inline">Kysymys:</b><p style="display:inline" th:inline="text"th:text="${arvo.kysymysteksti}"></p>
                 <form method="POST" th:action="@{~/poista/{id}(id=${arvo.id})}">
                     <input type="submit" value="Poista"/>
                 </form>
                 <a th:href="'/' + ${arvo.id}">Vastauksiin</a>
+                <br><br/>
             </li>
         </ul>
         <h3>Lisää kysymys</h3>
