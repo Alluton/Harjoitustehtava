@@ -152,11 +152,15 @@ public class Main {
             // tee kysely
             PreparedStatement stmt
                     = conn.prepareStatement("INSERT INTO Kysymys (kysymysteksti,kurssi,aihe) VALUES (?,?,?)");
-            stmt.setString(1, req.queryParams("kysymysteksti"));
-            stmt.setString(2, req.queryParams("kurssi"));
-            stmt.setString(3, req.queryParams("aihe"));
-
-            stmt.executeUpdate();
+            String kysymysteksti = req.queryParams("kysymysteksti");
+            String kurssi = req.queryParams("kurssi");
+            String aihe = req.queryParams("aihe");
+            stmt.setString(1, kysymysteksti);
+            stmt.setString(2, kurssi);
+            stmt.setString(3, aihe);
+            if(!req.queryParams("kysymysteksti").equals("")&&!req.queryParams("aihe").equals("")&&!req.queryParams("kurssi").equals("")){
+                stmt.executeUpdate();
+            }
 
             // sulje yhteys tietokantaan
             conn.close();
@@ -178,8 +182,10 @@ public class Main {
                 stmt.setBoolean(2,false);
             }
             stmt.setInt(3, Integer.parseInt(req.params(":id")));
-
-            stmt.executeUpdate();
+            if(!req.queryParams("vastausteksti").equals("")){
+                stmt.executeUpdate();
+            }
+            
             // sulje yhteys tietokantaan
             conn.close();
             res.redirect("/" +Integer.parseInt(req.params(":id")));

@@ -1,16 +1,15 @@
 package harjoitustehtava2;
 
-
 public class Kysymys {
     private String kurssi;
     private String aihe;
-    private String teksti;
+    private String kysymysteksti;
     private Integer id;
     public Kysymys(int id,String aihe,String kurssi,String teksti){
         this.id = id;
         this.kurssi = kurssi;
         this.aihe = aihe;
-        this.teksti = teksti;
+        this.kysymysteksti = teksti;
     }
     public Integer getId(){
         return id;
@@ -22,11 +21,16 @@ public class Kysymys {
         return aihe;
     }
     public String getKysymysTeksti(){
-        return teksti;
+        return kysymysteksti;
+    }
+    public boolean hasErrors(String string){
+        System.out.println("Mentiin kysymys.hasErrors");
+        System.out.println("Stringi: " +string);
+        return string.equals("");
     }
     @Override
     public String toString(){
-        return "Aihe: " + aihe + " Kysymys: " + teksti + " Kurssi: " + kurssi;
+        return "Aihe: " + aihe + " Kysymys: " + kysymysteksti + " Kurssi: " + kurssi;
     }
     
     
