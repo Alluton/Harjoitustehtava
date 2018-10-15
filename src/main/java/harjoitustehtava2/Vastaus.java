@@ -1,7 +1,6 @@
 package harjoitustehtava2;
 public class Vastaus {
     private boolean oikein;
-
     private String vastausteksti;
     private Integer id;
     private Integer kysymysId;
@@ -20,15 +19,10 @@ public class Vastaus {
     public String getVastausTeksti(){
         return vastausteksti;
     }
-    public void setVastausTeksti(String vastausteksti){
-        this.vastausteksti =vastausteksti;
-    }
     public int getKysymysId(){
         return kysymysId;
     }
-    public boolean hasErrors(String string){
-        return string.equals("");
-    }
+    @Override
     public String toString(){
         return "Teksti: " + vastausteksti + " Oikein: " + oikein;
     }

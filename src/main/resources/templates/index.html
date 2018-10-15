@@ -16,17 +16,18 @@
                 </form>
                 <form method="POST" th:action="@{~/vastaukset/{id}(id=${arvo.id})}">
                     <input type="submit" value="Lisää vastaus"/>
-                </form>  
+                </form>
+                <a th:href="'/' + ${arvo.id}">Vastauksiin</a>
             </li>
         </ul>
         <h3>Lisää kysymys</h3>
         <form method="POST" action="/kysymys">
             Aihe:<br/>
-            <input type="text" name="aihe"/><br/>
+            <input type="text" name="aihe" required/><br/>
             Kysymysteksti:<br/>
-            <input type="text" name="kysymysteksti"/><br/>
+            <input type="text" name="kysymysteksti" required/><br/>
             Kurssi:<br/>
-            <input type="text" name="kurssi"/><br/>
+            <input type="text" name="kurssi" required/><br/>
             <button name="subject" type="submit" value="HTML">Lisää kysymys</button>
         </form>
     </body>

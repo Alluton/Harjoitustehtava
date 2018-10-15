@@ -23,11 +23,6 @@ public class Kysymys {
     public String getKysymysTeksti(){
         return kysymysteksti;
     }
-    public boolean hasErrors(String string){
-        System.out.println("Mentiin kysymys.hasErrors");
-        System.out.println("Stringi: " +string);
-        return string.equals("");
-    }
     @Override
     public String toString(){
         return "Aihe: " + aihe + " Kysymys: " + kysymysteksti + " Kurssi: " + kurssi;
