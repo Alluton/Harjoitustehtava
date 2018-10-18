@@ -114,8 +114,10 @@ public class Main  {
                     = conn.prepareStatement("SELECT * FROM Vastaus WHERE id = ?");
             stmt.setInt(1, Integer.parseInt(req.params(":id")));
             ResultSet tulos = stmt.executeQuery();
-            kysymysId = tulos.getInt("kysymysId");
-        
+            while(tulos.next()){
+                kysymysId = tulos.getInt("kysymysId");
+            }
+          
             PreparedStatement stmt2
                     = conn.prepareStatement("DELETE FROM Vastaus WHERE id = ?");
             stmt2.setInt(1, Integer.parseInt(req.params(":id")));
